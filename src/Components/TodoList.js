@@ -11,39 +11,99 @@ class TodoList extends Component {
     };
   }
 
+  componentDidMount() {
+    this.fetchTodos();
+  }
+
+  async fetchTodos() {
+    try {
+      const response = await fetch('http://localhost:8080/getTodos');
+      const data = await response.json();
+
+      if (data.success) {
+        this.setState({ todos: data.todos });
+      } else {
+        console.error(data.error);
+      }
+    } catch (error) {
+      console.error('Error fetching todos:', error.message);
+    }
+  }
+
   handleInputChange = (e) => {
     this.setState({ newTodo: e.target.value });
   };
 
-  addTodo = () => {
+  addTodo = async () => {
     if (this.state.newTodo.trim() !== '') {
       const currentDate = new Date().toLocaleDateString();
       const currentTime = new Date().toLocaleTimeString();
       const newTodoItem = {
         text: this.state.newTodo,
-        id: Date.now(),
         date: `${currentDate} ${currentTime}`,
       };
 
-      this.setState((prevState) => ({
-        todos: [...prevState.todos, newTodoItem],
-        newTodo: '',
-      }));
+      try {
+        const response = await fetch('http://localhost:8080/addTodo', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newTodoItem),
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          this.fetchTodos();
+          this.setState({ newTodo: '' });
+        } else {
+          console.error(data.error);
+        }
+      } catch (error) {
+        console.error('Error adding todo:', error.message);
+      }
     }
   };
 
-  editTodo = (id, newText, newDate) => {
-    this.setState((prevState) => ({
-      todos: prevState.todos.map((todo) =>
-        todo.id === id ? { ...todo, text: newText, date: newDate } : todo
-      ),
-    }));
+  editTodo = async (id, newText, newDate) => {
+    try {
+      const response = await fetch(`http://localhost:8080/editTodo/${id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ text: newText, date: newDate }),
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        this.fetchTodos();
+      } else {
+        console.error(data.error);
+      }
+    } catch (error) {
+      console.error('Error editing todo:', error.message);
+    }
   };
 
-  removeTodo = (id) => {
-    this.setState((prevState) => ({
-      todos: prevState.todos.filter((todo) => todo.id !== id),
-    }));
+  removeTodo = async (id) => {
+    try {
+      const response = await fetch(`http://localhost:8080/removeTodo/${id}`, {
+        method: 'DELETE',
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        this.fetchTodos();
+      } else {
+        console.error(data.error);
+      }
+    } catch (error) {
+      console.error('Error removing todo:', error.message);
+    }
   };
 
   render() {
@@ -62,7 +122,7 @@ class TodoList extends Component {
         <ul className="todo-list">
           {this.state.todos.map((todo) => (
             <TodoItem
-              key={todo.id}
+              key={todo._id}
               todo={todo}
               editTodo={this.editTodo}
               removeTodo={this.removeTodo}

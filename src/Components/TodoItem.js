@@ -1,5 +1,3 @@
-// TodoItem.js
-
 import React, { useState } from 'react';
 import '../Css/TodoItem.css';
 
@@ -14,7 +12,7 @@ const TodoItem = ({ todo, editTodo, removeTodo }) => {
 
   const handleEditSave = () => {
     if (editedText.trim() !== '') {
-      editTodo(todo.id, editedText, editedDate);
+      editTodo(todo._id, editedText, editedDate);
       setIsEditing(false);
     }
   };
@@ -49,7 +47,7 @@ const TodoItem = ({ todo, editTodo, removeTodo }) => {
             <button className="edit-btn" onClick={handleEditToggle}>
               Edit
             </button>
-            <button className="remove-btn" onClick={() => removeTodo(todo.id)}>
+            <button className="remove-btn" onClick={() => removeTodo(todo._id)}>
               Remove
             </button>
           </div>
