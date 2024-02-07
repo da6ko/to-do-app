@@ -19,7 +19,7 @@ Before starting the client-side, make sure to start the server-side application.
 ```bash
 npm install
 ```
-This command installs the necessary dependencies for the client-side application. You'll need:
+This command installs the necessary dependencies for the client-side application.
 
 4. Configure MongoDB Atlas
 Make sure to configure your MongoDB Atlas connection in the server-side code. Replace the connection string in server.js with your actual MongoDB Atlas connection string.
