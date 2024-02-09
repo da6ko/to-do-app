@@ -1,6 +1,6 @@
 # Todo
 
-To-do list made with the MERN stack (MongoDB/Express/React/Node). The app contains client side (this application) and server side (https://github.com/da6ko/to-do-app-server)
+To-do list made with the MERN stack (MongoDB/Express/React/Node). The app contains client side (this application) and [server side](https://github.com/da6ko/to-do-app-server)
 
 ## How to start
 
