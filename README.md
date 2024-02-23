@@ -46,8 +46,8 @@ React: Frontend library for building user interfaces.
 Node.js: JavaScript runtime for server-side development.
 
 # Folder Structure
-src: Contains the client-side React application.
-components: React components for rendering different parts of the application.
-Css: Stylesheets for styling the components.
-App.js: Main application component.
-index.js: Entry point for the React application.
+- src: Contains the client-side React application.
+- components: React components for rendering different parts of the application.
+- Css: Stylesheets for styling the components.
+- App.js: Main application component.
+- index.js: Entry point for the React application.
